@@ -7,16 +7,17 @@ const { TextAnalysisClient, AzureKeyCredential} = require("@azure/ai-text-analyt
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors')
+const basepath = '/apis/v1/entity'
 
 const options = {
     swaggerDefinition: {
-        info: {
+        info: { 
             title: 'Entity API Documentation',
             version: '1.0.0',
             description: 'Entity API Documentation',
         },
         host: 'localhost:3000',
-        basepath: '/'
+        basepath: 'apis/v1/entity'
     },
     apis:['./app.js'],
 };
@@ -77,7 +78,7 @@ const validateData = (data) => {
  *        '500':
  *          description: Something went wrong on the server. Please try again later.
  */
-app.post('/RecognizeEntities', urlencodedParser, (req, res) => {
+app.post(basepath+'/RecognizeEntities', urlencodedParser, (req, res) => {
   function escapeString(str) {
     return str.replace(/[-[\]{}()*+?.>,<\\^$|#\s]/g, ' ');
   }
@@ -134,7 +135,7 @@ app.post('/RecognizeEntities', urlencodedParser, (req, res) => {
  *        '500':
  *          description: Something went wrong on the server. Please try again later.
  */
-app.post('/RecognizePiiEntities', urlencodedParser, (req, res) => {
+app.post(basepath+'/RecognizePiiEntities', urlencodedParser, (req, res) => {
   function escapeString(str) {
     return str.replace(/[-[\]{}()*+?.>,<\\^$|#\s]/g, ' ');
   }
@@ -191,7 +192,7 @@ app.post('/RecognizePiiEntities', urlencodedParser, (req, res) => {
  *        '500':
  *          description: Something went wrong on the server. Please try again later.
  */
-app.post('/ExtractKeyPhrase', urlencodedParser, (req, res) => {
+app.post(basepath+'/ExtractKeyPhrase', urlencodedParser, (req, res) => {
   function escapeString(str) {
     return str.replace(/[-[\]{}()*+?.>,<\\^$|#\s]/g, ' ');
   }
@@ -251,7 +252,7 @@ app.post('/ExtractKeyPhrase', urlencodedParser, (req, res) => {
  *        '500':
  *          description: Something went wrong on the server. Please try again later.
  */
-app.post('/RecognizeEntityLinking', urlencodedParser, (req, res) => {
+app.post(basepath+'/RecognizeEntityLinking', urlencodedParser, (req, res) => {
 
     function escapeString(str) {
     return str.replace(/[-[\]{}()*+?.>,<\\^$|#\s]/g, ' ');
@@ -293,19 +294,21 @@ app.get('/', (req, res)=>{
   res.render('index');
 });
 
-app.get('/RegEntityLinking',(req,res,next)=>{
+
+
+app.get('/apis/v1/entity/RecognizeEntityLinking',(req,res,next)=>{
   res.render('RegEntityLinking');
 });
 
-app.get('/RegEntities',(req,res,next)=>{
+app.get('/apis/v1/entity/RecognizeEntities',(req,res,next)=>{
   res.render('RegEntities');
 });
 
-app.get('/RegPiiEntities',(req,res,next)=>{
+app.get('/apis/v1/entity/RecognizePiiEntities',(req,res,next)=>{
   res.render('RegPiiEntities');
 });
 
-app.get('/ExtractKeyPhrase',(req,res,next)=>{
+app.get('/apis/v1/entity/ExtractKeyPhrase',(req,res,next)=>{
   res.render('ExtractKeyPhrase');
 });
 
