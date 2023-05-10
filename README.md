@@ -15,7 +15,7 @@ The request made to the APIs are asynchronous and [Promise](https://developer.mo
 
 **Environment And Libraries Used**
 
-API Recognition:
+Entity Recognition:
 
 - Protocol used: HTTP
 - Development language: Node.js - Express.js
@@ -29,54 +29,53 @@ Temporarily the API is hosted in one of the droplets in Digital Ocean, to run so
 ### Server Endpoint
 
 ```
-http://[digitalOcean_host]:5000/
+http://159.223.131.133:3000/
 ```
 
 ### API Endpoint
 
 ```
-http://[digitalOcean_host]:5000/api/v1/sentiments/
+http://159.223.131.133:3000/api/v1/recognition/
 ```
 
 ### Post Request Body
-
-```Array
-[ "<Your Text or Conversation goes here>"]
-```
+```application/json```
+```Array of strings ```
+```[ "<Your Text or Conversation goes here>"]```
 
 ## Possible Responses :
 
-| Response code | Description             |
-| ------------- | ----------------------- |
-| 200           | OK                      |
-| 400           | Input Validation Failed |
-| 500           | Internal Server Error   |
+| Response code | Description                                                         |
+| ------------- | ------------------------------------------------------------------  |
+| 200           | Entities recognized successfully                                    |
+| 400           | Invalid data format. The input must be a non-empty array of strings |
+| 500           | Something went wrong on the server. Please try again later.         |
 
 #
 
 ### Output:
 
-Contains the object with identified language, overall sentiment and confidences along with analysis of each sentences in the provided text
+Identifies, Recognize the Entities and Key phrases and link them.
 
 ## Swagger
 
 Swagger for the API added for testing the API withing the host
 
 ```
-http://162.243.172.115:5000/docs
+http://159.223.131.133:3000/docs
 ```
 
 # Setup in Local
 
 1. Create [Azure language resource](https://azure.microsoft.com/en-us/products/cognitive-services/language-service/#overview) and copy the Key and Endpoint
-2. Set the Key and Endpoint to the enviroment variables with variable names as _LANGUAGE_KEY_ and _LANGUAGE_ENDPOINT_
-3. Make sure you have installed node, if not download and install the latest version of node
-4. Clone the repository to local machine
-5. Open terminal and run the command "npm i"
-6. To run the server locally use following command "node app.js"
-7. Test the server with the following endpoint "http://localhost:5000/"
-8. To test the API, send the post request to the following endpoint "http://localhost:5000/api/v1/sentiments/" with the payload containing the text to do sentimental analysis.
-9. For swagger docs, use the following endpoint "http://localhost:5000/docs"
+2. Set the Key and Endpoint as environment variables with the variable names API_KEY and API_ENDPOINT respectively.
+3. Ensure that you have Node.js installed. If not, download and install the latest version of Node.js.
+4. Clone the repository to your local machine.
+5. Open a terminal and navigate to the project's directory, then run the command npm install to install the required dependencies.
+6. To start the server locally, use the command nodemon app.js in the terminal.
+7. Test the server by accessing the following endpoint in your browser: http://localhost:3000/
+8.To test the API, send a POST request to the following endpoint: http://localhost:3000/api/v1/entity/, with the payload containing the text you want to analyze for sentiment.
+9.For Swagger documentation, use the following endpoint in your browser: http://localhost:3000/docs
 
 # Usage:
 
