@@ -17,8 +17,8 @@ const options = {
             version: '1.0.0',
             description: 'Entity API Documentation',
         },
-        host: 'localhost:3000',
-        basepath: 'apis/v1/entity/'
+        host: 'localhost:3000/',
+        basepath: '/apis/v1/entity/'
     },
     apis:['./app.js'],
 };
@@ -56,7 +56,7 @@ const validateData = (data) => {
 
 /**
  * @swagger
- * /RecognizeEntities:
+ * /apis/v1/entity/RecognizeEntities:
  *    post:
  *      description: Analyze input data and recognize entities in English language
  *      produces:
@@ -113,7 +113,7 @@ app.post(basepath+'/RecognizeEntities', urlencodedParser, (req, res) => {
 
 /**
  * @swagger
- * /RecognizePiiEntities:
+ * /apis/v1/entity/RecognizePiiEntities:
  *    post:
  *      description: Analyze input data and recognize sensitive personally identifiable entities
  *      produces:
@@ -172,7 +172,7 @@ app.post(basepath+'/RecognizePiiEntities', urlencodedParser, (req, res) => {
 
 /**
  * @swagger
- * /ExtractKeyPhrase:
+ * /apis/v1/entity/ExtractKeyPhrase:
  *    post:
  *      description: Analyze input data and recognize and extract the key phrases
  *      produces:
@@ -230,7 +230,7 @@ app.post(basepath+'/ExtractKeyPhrase', urlencodedParser, (req, res) => {
 
 /**
  * @swagger
- * /RecognizeEntityLinking:
+ * /apis/v1/entity/RecognizeEntityLinking:
  *    post:
  *      description: Analyze input data and Limnk the Enities
  *      produces:
@@ -296,22 +296,6 @@ app.get('/', (req, res)=>{
 });
 
 app.use('/apis/v1/entity/' , mainRoutes);
-
-// app.get('/apis/v1/entity/RecognizeEntityLinking',(req,res,next)=>{
-//   res.render('RegEntityLinking');
-// });
-
-// app.get('/apis/v1/entity/RecognizeEntities',(req,res,next)=>{
-//   res.render('RegEntities');
-// });
-
-// app.get('/apis/v1/entity/RecognizePiiEntities',(req,res,next)=>{
-//   res.render('RegPiiEntities');
-// });
-
-// app.get('/apis/v1/entity/ExtractKeyPhrase',(req,res,next)=>{
-//   res.render('ExtractKeyPhrase');
-// });
 
 
 app.listen(port, () => {

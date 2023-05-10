@@ -1,19 +1,3 @@
-// app.get('/RecognizeEntityLinking',(req,res,next)=>{
-//   res.render('RegEntityLinking');
-// });
-
-// app.get('/RecognizeEntities',(req,res,next)=>{
-//   res.render('RegEntities');
-// });
-
-// app.get('/RecognizePiiEntities',(req,res,next)=>{
-//   res.render('RegPiiEntities');
-// });
-
-// app.get('/ExtractKeyPhrase',(req,res,next)=>{
-//   res.render('ExtractKeyPhrase');
-// });
-
 exports.link = (req,res)=>{
     res.render('RegEntityLinking');
 };
