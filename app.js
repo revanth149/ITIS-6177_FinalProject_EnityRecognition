@@ -8,6 +8,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors')
 const basepath = '/apis/v1/entity'
+const mainRoutes = require('./routes/mainRoutes');
 
 const options = {
     swaggerDefinition: {
@@ -17,7 +18,7 @@ const options = {
             description: 'Entity API Documentation',
         },
         host: 'localhost:3000',
-        basepath: 'apis/v1/entity'
+        basepath: 'apis/v1/entity/'
     },
     apis:['./app.js'],
 };
@@ -294,23 +295,23 @@ app.get('/', (req, res)=>{
   res.render('index');
 });
 
+app.use('/apis/v1/entity/' , mainRoutes);
 
+// app.get('/apis/v1/entity/RecognizeEntityLinking',(req,res,next)=>{
+//   res.render('RegEntityLinking');
+// });
 
-app.get('/apis/v1/entity/RecognizeEntityLinking',(req,res,next)=>{
-  res.render('RegEntityLinking');
-});
+// app.get('/apis/v1/entity/RecognizeEntities',(req,res,next)=>{
+//   res.render('RegEntities');
+// });
 
-app.get('/apis/v1/entity/RecognizeEntities',(req,res,next)=>{
-  res.render('RegEntities');
-});
+// app.get('/apis/v1/entity/RecognizePiiEntities',(req,res,next)=>{
+//   res.render('RegPiiEntities');
+// });
 
-app.get('/apis/v1/entity/RecognizePiiEntities',(req,res,next)=>{
-  res.render('RegPiiEntities');
-});
-
-app.get('/apis/v1/entity/ExtractKeyPhrase',(req,res,next)=>{
-  res.render('ExtractKeyPhrase');
-});
+// app.get('/apis/v1/entity/ExtractKeyPhrase',(req,res,next)=>{
+//   res.render('ExtractKeyPhrase');
+// });
 
 
 app.listen(port, () => {
