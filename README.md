@@ -11,8 +11,6 @@ ref:
 
 Azure Cognitive Search is the only cloud search service with built-in AI capabilities that enrich all types of information to help you identify and explore relevant content at scale. Use cognitive skills for vision, language, and speech, or use custom machine learning models to uncover insights from all types of content. Azure Cognitive Search also offers semantic search capability, which uses advanced machine learning techniques to understand user intent and contextually rank the most relevant search results.
 
-The request made to the APIs are asynchronous and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) is used for calling the APIs and waiting for their responses.
-
 **Environment And Libraries Used**
 
 Entity Recognition:
@@ -20,7 +18,7 @@ Entity Recognition:
 - Protocol used: HTTP
 - Development language: Node.js - Express.js
 - Libraries: @azure/ai-text-analytics, swagger-jsdoc, swagger-ui-express
-- API Checker : swagger
+- API Checker : swagger, postman
 
 # Try Out
 
@@ -57,7 +55,8 @@ http://159.223.131.133:3000/api/v1/recognition/
 
 Identifies, Recognize the Entities and Key phrases and link them.
 
-## Swagger
+## Swagger Endpoint
+
 
 Swagger for the API added for testing the API withing the host
 
@@ -79,203 +78,196 @@ http://159.223.131.133:3000/docs
 
 # Usage:
 
+## EntityRecognition
+
+ This API uses the entity recognition endpoint to detect entities in a document using Named Entity Recognition (NER) and prints them along with their recognized entity type.
+ 
 **Request:**
 
 ```
 curl -X 'POST' \
-  'http://162.243.172.115:5000/api/v1/sentiments/' \
+  'http://159.223.131.133:3000/apis/v1/entity/RecognizeEntities' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -d '{
-  "text": "The rooms were beautiful but dirty. The AC was good and quiet, but the elevator was broken"
-}'
+  -d '[
+  "This is Revanth Kumar Galla from India"
+]'
 ```
 
 **Response:**
 
-```JSON
-{
-  "language": "English",
-  "sentiment": "negative",
-  "confidenceScores": {
-    "positive": 0,
-    "neutral": 0,
-    "negative": 0.99
-  },
-  "sentences": [
-    {
-      "text": "The rooms were beautiful but dirty. ",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0.01,
-        "neutral": 0.01,
-        "negative": 0.99
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "entities": [
+      {
+        "text": "Revanth Kumar Galla",
+        "category": "Person",
+        "offset": 8,
+        "length": 19,
+        "confidenceScore": 1
       },
-      "opinions": [
-        {
-          "text": "rooms",
-          "sentiment": "mixed",
-          "confidenceScores": {
-            "positive": 0.5,
-            "negative": 0.5
-          },
-          "assessments": [
-            {
-              "text": "beautiful",
-              "sentiment": "positive"
-            },
-            {
-              "text": "dirty",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "text": "The AC was good and quiet, but the elevator was broken",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0,
-        "neutral": 0,
-        "negative": 1
-      },
-      "opinions": [
-        {
-          "text": "AC",
-          "sentiment": "positive",
-          "confidenceScores": {
-            "positive": 1,
-            "negative": 0
-          },
-          "assessments": [
-            {
-              "text": "good",
-              "sentiment": "positive"
-            },
-            {
-              "text": "quiet",
-              "sentiment": "positive"
-            }
-          ]
-        },
-        {
-          "text": "elevator",
-          "sentiment": "negative",
-          "confidenceScores": {
-            "positive": 0.01,
-            "negative": 0.99
-          },
-          "assessments": [
-            {
-              "text": "broken",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+      {
+        "text": "India",
+        "category": "Location",
+        "subCategory": "GPE",
+        "offset": 33,
+        "length": 5,
+        "confidenceScore": 1
+      }
+    ]
+  }
+]
 ```
+## PiiEntityRecognition
+
+  This API uses the PII-recognition endpoint to detect sensitive personally identifiable information in documents (such as social security numbers, addresses, and more). The API returns information about the location of the sensitive information in the text, which we use to perform redaction of the PII text.
 
 **Request:**
 
 ```
 curl -X 'POST' \
-  'http://162.243.172.115:5000/api/v1/sentiments/' \
+  'http://159.223.131.133:3000/apis/v1/entity/RecognizePiiEntities' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -d '{
-  "text": "Las habitaciones eran hermosas pero sucias. El aire acondicionado era bueno y silencioso, pero el ascensor estaba roto."
-}'
+  -d '[
+  "I am Revanth Kumar Galla with mobile number 980-382-9999 and ssn 852147963"
+]'
 
 ```
 
 **Response:**
 
-```JSON
-{
-  "language": "Spanish",
-  "sentiment": "negative",
-  "confidenceScores": {
-    "positive": 0.02,
-    "neutral": 0,
-    "negative": 0.98
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "redactedText": "I am ******************* with mobile number ************ and ssn *********",
+    "entities": [
+      {
+        "text": "Revanth Kumar Galla",
+        "category": "Person",
+        "offset": 5,
+        "length": 19,
+        "confidenceScore": 0.84
+      },
+      {
+        "text": "980 382 9999",
+        "category": "PhoneNumber",
+        "offset": 44,
+        "length": 12,
+        "confidenceScore": 0.8
+      },
+      {
+        "text": "852147963",
+        "category": "PhoneNumber",
+        "offset": 65,
+        "length": 9,
+        "confidenceScore": 0.8
+      },
+      {
+        "text": "852147963",
+        "category": "USSocialSecurityNumber",
+        "offset": 65,
+        "length": 9,
+        "confidenceScore": 0.55
+      }
+    ]
+  }
+]
+```
+## Extract Key Phrase
+
+This API call uses the key-phrase extraction endpoint to determine which words or phrases in a document are of particular importance.
+
+**Request:**
+
+```
+curl -X 'POST' \
+  'http://159.223.131.133:3000/apis/v1/entity/ExtractKeyPhrase' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "Redmond is a city in King County, Washington, United States, located 15 miles east of Seattle.",
+  "I need to take my cat to the veterinarian.",
+  "I will travel to South America in the summer."
+]'
+```
+
+**Response:**
+
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "keyPhrases": [
+      "King County  Washington  United States",
+      "Redmond",
+      "city",
+      "Seattle"
+    ]
   },
-  "sentences": [
-    {
-      "text": "Las habitaciones eran hermosas pero sucias. ",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0.03,
-        "neutral": 0.01,
-        "negative": 0.96
-      },
-      "opinions": [
-        {
-          "text": "habitaciones",
-          "sentiment": "positive",
-          "confidenceScores": {
-            "positive": 0.51,
-            "negative": 0.49
-          },
-          "assessments": [
-            {
-              "text": "hermosas",
-              "sentiment": "positive"
-            },
-            {
-              "text": "sucias",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "text": "El aire acondicionado era bueno y silencioso, pero el ascensor estaba roto.",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0,
-        "neutral": 0,
-        "negative": 1
-      },
-      "opinions": [
-        {
-          "text": "aire acondicionado",
-          "sentiment": "positive",
-          "confidenceScores": {
-            "positive": 1,
-            "negative": 0
-          },
-          "assessments": [
-            {
-              "text": "bueno",
-              "sentiment": "positive"
-            },
-            {
-              "text": "silencioso",
-              "sentiment": "positive"
-            }
-          ]
-        },
-        {
-          "text": "ascensor",
-          "sentiment": "negative",
-          "confidenceScores": {
-            "positive": 0.04,
-            "negative": 0.96
-          },
-          "assessments": [
-            {
-              "text": "roto",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+  {
+    "id": "1",
+    "warnings": [],
+    "keyPhrases": [
+      "cat",
+      "veterinarian"
+    ]
+  },
+  {
+    "id": "2",
+    "warnings": [],
+    "keyPhrases": [
+      "South America",
+      "summer"
+    ]
+  }
+]
+```
+
+## Recognize Entity Linking
+
+ This API uses the linked entity recognition endpoint to detect well-known entities in a document and connect (link) them to entries in an external knowledge base (such as Wikipedia) that contain information about the entity.
+
+**Request:**
+
+```
+curl -X 'POST' \
+  'http://159.223.131.133:3000/apis/v1/entity/RecognizeEntityLinking' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "I am studying in Unc charlotte"
+]'
+
+```
+
+**Response:**
+
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "entities": [
+      {
+        "name": "University of North Carolina at Charlotte",
+        "matches": [
+          {
+            "confidenceScore": 0.2,
+            "text": "Unc charlotte",
+            "offset": 17,
+            "length": 13
+          }
+        ],
+        "language": "en",
+        "dataSourceEntityId": "University of North Carolina at Charlotte",
+        "url": "https://en.wikipedia.org/wiki/University_of_North_Carolina_at_Charlotte",
+        "dataSource": "Wikipedia",
+        "bingEntitySearchApiId": "8868d55f-2f1f-1ccb-23ed-5a37e83e769c"
+      }
+    ]
+  }
+]
 ```
