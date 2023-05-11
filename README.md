@@ -22,12 +22,12 @@ Entity Recognition:
 
 ## Data Validation
 I had verified if the input to the API is an array of strings. The API raises an error if it is of any other datatype.
-![Image](si1.PNG)
+![Image](/public/images/si1.PNG)
 
 ## Data Sanitization
 * I had used data sanitization techniques to avoid like .trim() to avoid spaces and replaced other special characters.To ensure the input  contains only text. 
 
-![Image](si2.PNG)
+![Image](/public/images/si2.PNG)
 
 # Try Out
 
@@ -279,3 +279,18 @@ curl -X 'POST' \
   }
 ]
 ```
+## Use the web application
+
+* I had also developed a basic front-end version to these API's which allows users to send the request.
+![Image](/public/images/si3.PNG)
+* You can click on the respective link to test the API. 
+* You can enter the text in the form of array of Strings and click submit. 
+![Image](/public/images/si4.PNG)
+* which will use the respective azure endpoints and extact the entities.
+![Image](/public/images/si5.PNG) 
+
+## Use Swagger in the web application
+
+* I had implemented swagger to test the API's 
+* You can use the test it out option on the different requests to test the API
+* ![Image](/public/images/si6.PNG)
