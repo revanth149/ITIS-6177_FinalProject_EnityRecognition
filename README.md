@@ -20,6 +20,15 @@ Entity Recognition:
 - Libraries: @azure/ai-text-analytics, swagger-jsdoc, swagger-ui-express
 - API Checker : swagger, postman
 
+## Data Validation
+I had verified if the input to the API is an array of strings. The API raises an error if it is of any other datatype.
+![Image](si1.PNG)
+
+## Data Sanitization
+* I had used data sanitization techniques to avoid like .trim() to avoid spaces and replaced other special characters.To ensure the input  contains only text. 
+
+![Image](si2.PNG)
+
 # Try Out
 
 Temporarily the API is hosted in one of the droplets in Digital Ocean, to run some tests and checkout the functionality
@@ -31,7 +40,7 @@ http://159.223.131.133:3000/
 ```
 
 ### API Endpoint
-
+* Used versioning to the API which is one of the good coding practice. It also helps us to iterate faster when the needed changes are identified in the APIs
 ```
 http://159.223.131.133:3000/api/v1/recognition/
 ```
@@ -49,7 +58,6 @@ http://159.223.131.133:3000/api/v1/recognition/
 | 400           | Invalid data format. The input must be a non-empty array of strings |
 | 500           | Something went wrong on the server. Please try again later.         |
 
-#
 
 ### Output:
 
@@ -80,7 +88,7 @@ http://159.223.131.133:3000/docs
 
 ## EntityRecognition
 
- This API uses the entity recognition endpoint to detect entities in a document using Named Entity Recognition (NER) and prints them along with their recognized entity type.
+* This API uses the entity recognition endpoint to detect entities in a document using Named Entity Recognition (NER) and prints them along with their recognized entity type.
  
 **Request:**
 
@@ -122,7 +130,7 @@ curl -X 'POST' \
 ```
 ## PiiEntityRecognition
 
-  This API uses the PII-recognition endpoint to detect sensitive personally identifiable information in documents (such as social security numbers, addresses, and more). The API returns information about the location of the sensitive information in the text, which we use to perform redaction of the PII text.
+  * This API uses the PII-recognition endpoint to detect sensitive personally identifiable information in documents (such as social security numbers, addresses, and more). The API returns information about the location of the sensitive information in the text, which we use to perform redaction of the PII text.
 
 **Request:**
 
@@ -179,7 +187,7 @@ curl -X 'POST' \
 ```
 ## Extract Key Phrase
 
-This API call uses the key-phrase extraction endpoint to determine which words or phrases in a document are of particular importance.
+* This API call uses the key-phrase extraction endpoint to determine which words or phrases in a document are of particular importance.
 
 **Request:**
 
@@ -229,7 +237,7 @@ curl -X 'POST' \
 
 ## Recognize Entity Linking
 
- This API uses the linked entity recognition endpoint to detect well-known entities in a document and connect (link) them to entries in an external knowledge base (such as Wikipedia) that contain information about the entity.
+* This API uses the linked entity recognition endpoint to detect well-known entities in a document and connect (link) them to entries in an external knowledge base (such as Wikipedia) that contain information about the entity.
 
 **Request:**
 
