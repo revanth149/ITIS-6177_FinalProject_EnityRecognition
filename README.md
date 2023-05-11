@@ -1,11 +1,14 @@
 # Entity Recognition
 
-This API is a wrapper to the [Azure's cognitive services API](https://azure.microsoft.com/en-us/products/cognitive-services/language-service/) with different languages services [language services]()
+This API is a wrapper to the [Azure's cognitive services API](https://azure.microsoft.com/en-us/products/cognitive-services/language-service/) with different languages services.
 
 [Entity recognition](https://en.wikipedia.org/wiki/Azure_Cognitive_Search) using these services for Language enables you to build apps with industry-leading natural language understanding capabilities without machine learning expertise.
 
-![image]()
-ref: 
+
+![image](/public/images/si10.PNG)
+![image](/public/images/si8.PNG)
+
+* ref: https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/custom-text-classification/overview
 
 # Development
 
@@ -281,7 +284,7 @@ curl -X 'POST' \
 ```
 ## Use the web application
 
-* I had also developed a basic front-end version to these API's which allows users to send the request.
+* Had also developed a basic front-end version to these API's which allows users to send the request.
 ![Image](/public/images/si3.PNG)
 * You can click on the respective link to test the API. 
 * You can enter the text in the form of array of Strings and click submit. 
@@ -291,6 +294,11 @@ curl -X 'POST' \
 
 ## Use Swagger in the web application
 
-* I had implemented swagger to test the API's 
+* Implemented swagger to test the API's 
 * You can use the test it out option on the different requests to test the API
 * ![Image](/public/images/si6.PNG)
+
+## Testing using PostMan
+
+* Had verified the API's using postman.
+![Image](/public/images/si9.PNG) 
