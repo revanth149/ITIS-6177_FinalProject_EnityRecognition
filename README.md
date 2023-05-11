@@ -11,8 +11,6 @@ ref:
 
 Azure Cognitive Search is the only cloud search service with built-in AI capabilities that enrich all types of information to help you identify and explore relevant content at scale. Use cognitive skills for vision, language, and speech, or use custom machine learning models to uncover insights from all types of content. Azure Cognitive Search also offers semantic search capability, which uses advanced machine learning techniques to understand user intent and contextually rank the most relevant search results.
 
-The request made to the APIs are asynchronous and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) is used for calling the APIs and waiting for their responses.
-
 **Environment And Libraries Used**
 
 Entity Recognition:
@@ -20,7 +18,7 @@ Entity Recognition:
 - Protocol used: HTTP
 - Development language: Node.js - Express.js
 - Libraries: @azure/ai-text-analytics, swagger-jsdoc, swagger-ui-express
-- API Checker : swagger
+- API Checker : swagger, postman
 
 # Try Out
 
