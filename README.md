@@ -82,7 +82,8 @@ http://159.223.131.133:3000/docs
 
 ## EntityRecognition
 
-
+ This API uses the entity recognition endpoint to detect entities in a document using Named Entity Recognition (NER) and prints them along with their recognized entity type.
+ 
 **Request:**
 
 ```
@@ -122,6 +123,8 @@ curl -X 'POST' \
 ]
 ```
 ## PiiEntityRecognition
+
+  This API uses the PII-recognition endpoint to detect sensitive personally identifiable information in documents (such as social security numbers, addresses, and more). The API returns information about the location of the sensitive information in the text, which we use to perform redaction of the PII text.
 
 **Request:**
 
@@ -178,6 +181,7 @@ curl -X 'POST' \
 ```
 ## Extract Key Phrase
 
+This API call uses the key-phrase extraction endpoint to determine which words or phrases in a document are of particular importance.
 
 **Request:**
 
@@ -226,6 +230,8 @@ curl -X 'POST' \
 ```
 
 ## Recognize Entity Linking
+
+ This API uses the linked entity recognition endpoint to detect well-known entities in a document and connect (link) them to entries in an external knowledge base (such as Wikipedia) that contain information about the entity.
 
 **Request:**
 
