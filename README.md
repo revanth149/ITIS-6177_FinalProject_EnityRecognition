@@ -57,7 +57,8 @@ http://159.223.131.133:3000/api/v1/recognition/
 
 Identifies, Recognize the Entities and Key phrases and link them.
 
-## Swagger
+## Swagger Endpoint
+
 
 Swagger for the API added for testing the API withing the host
 
@@ -79,203 +80,190 @@ http://159.223.131.133:3000/docs
 
 # Usage:
 
-**Request:**
+## EntityRecognition
 
-```
-curl -X 'POST' \
-  'http://162.243.172.115:5000/api/v1/sentiments/' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "text": "The rooms were beautiful but dirty. The AC was good and quiet, but the elevator was broken"
-}'
-```
-
-**Response:**
-
-```JSON
-{
-  "language": "English",
-  "sentiment": "negative",
-  "confidenceScores": {
-    "positive": 0,
-    "neutral": 0,
-    "negative": 0.99
-  },
-  "sentences": [
-    {
-      "text": "The rooms were beautiful but dirty. ",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0.01,
-        "neutral": 0.01,
-        "negative": 0.99
-      },
-      "opinions": [
-        {
-          "text": "rooms",
-          "sentiment": "mixed",
-          "confidenceScores": {
-            "positive": 0.5,
-            "negative": 0.5
-          },
-          "assessments": [
-            {
-              "text": "beautiful",
-              "sentiment": "positive"
-            },
-            {
-              "text": "dirty",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "text": "The AC was good and quiet, but the elevator was broken",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0,
-        "neutral": 0,
-        "negative": 1
-      },
-      "opinions": [
-        {
-          "text": "AC",
-          "sentiment": "positive",
-          "confidenceScores": {
-            "positive": 1,
-            "negative": 0
-          },
-          "assessments": [
-            {
-              "text": "good",
-              "sentiment": "positive"
-            },
-            {
-              "text": "quiet",
-              "sentiment": "positive"
-            }
-          ]
-        },
-        {
-          "text": "elevator",
-          "sentiment": "negative",
-          "confidenceScores": {
-            "positive": 0.01,
-            "negative": 0.99
-          },
-          "assessments": [
-            {
-              "text": "broken",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
 
 **Request:**
 
 ```
 curl -X 'POST' \
-  'http://162.243.172.115:5000/api/v1/sentiments/' \
+  'http://159.223.131.133:3000/apis/v1/entity/RecognizeEntities' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -d '{
-  "text": "Las habitaciones eran hermosas pero sucias. El aire acondicionado era bueno y silencioso, pero el ascensor estaba roto."
-}'
+  -d '[
+  "This is Revanth Kumar Galla from India"
+]'
+```
+
+**Response:**
+
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "entities": [
+      {
+        "text": "Revanth Kumar Galla",
+        "category": "Person",
+        "offset": 8,
+        "length": 19,
+        "confidenceScore": 1
+      },
+      {
+        "text": "India",
+        "category": "Location",
+        "subCategory": "GPE",
+        "offset": 33,
+        "length": 5,
+        "confidenceScore": 1
+      }
+    ]
+  }
+]
+```
+## PiiEntityRecognition
+
+**Request:**
+
+```
+curl -X 'POST' \
+  'http://159.223.131.133:3000/apis/v1/entity/RecognizePiiEntities' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "I am Revanth Kumar Galla with mobile number 980-382-9999 and ssn 852147963"
+]'
 
 ```
 
 **Response:**
 
-```JSON
-{
-  "language": "Spanish",
-  "sentiment": "negative",
-  "confidenceScores": {
-    "positive": 0.02,
-    "neutral": 0,
-    "negative": 0.98
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "redactedText": "I am ******************* with mobile number ************ and ssn *********",
+    "entities": [
+      {
+        "text": "Revanth Kumar Galla",
+        "category": "Person",
+        "offset": 5,
+        "length": 19,
+        "confidenceScore": 0.84
+      },
+      {
+        "text": "980 382 9999",
+        "category": "PhoneNumber",
+        "offset": 44,
+        "length": 12,
+        "confidenceScore": 0.8
+      },
+      {
+        "text": "852147963",
+        "category": "PhoneNumber",
+        "offset": 65,
+        "length": 9,
+        "confidenceScore": 0.8
+      },
+      {
+        "text": "852147963",
+        "category": "USSocialSecurityNumber",
+        "offset": 65,
+        "length": 9,
+        "confidenceScore": 0.55
+      }
+    ]
+  }
+]
+```
+## Extract Key Phrase
+
+
+**Request:**
+
+```
+curl -X 'POST' \
+  'http://159.223.131.133:3000/apis/v1/entity/ExtractKeyPhrase' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "Redmond is a city in King County, Washington, United States, located 15 miles east of Seattle.",
+  "I need to take my cat to the veterinarian.",
+  "I will travel to South America in the summer."
+]'
+```
+
+**Response:**
+
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "keyPhrases": [
+      "King County  Washington  United States",
+      "Redmond",
+      "city",
+      "Seattle"
+    ]
   },
-  "sentences": [
-    {
-      "text": "Las habitaciones eran hermosas pero sucias. ",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0.03,
-        "neutral": 0.01,
-        "negative": 0.96
-      },
-      "opinions": [
-        {
-          "text": "habitaciones",
-          "sentiment": "positive",
-          "confidenceScores": {
-            "positive": 0.51,
-            "negative": 0.49
-          },
-          "assessments": [
-            {
-              "text": "hermosas",
-              "sentiment": "positive"
-            },
-            {
-              "text": "sucias",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "text": "El aire acondicionado era bueno y silencioso, pero el ascensor estaba roto.",
-      "sentiment": "negative",
-      "confidenceScores": {
-        "positive": 0,
-        "neutral": 0,
-        "negative": 1
-      },
-      "opinions": [
-        {
-          "text": "aire acondicionado",
-          "sentiment": "positive",
-          "confidenceScores": {
-            "positive": 1,
-            "negative": 0
-          },
-          "assessments": [
-            {
-              "text": "bueno",
-              "sentiment": "positive"
-            },
-            {
-              "text": "silencioso",
-              "sentiment": "positive"
-            }
-          ]
-        },
-        {
-          "text": "ascensor",
-          "sentiment": "negative",
-          "confidenceScores": {
-            "positive": 0.04,
-            "negative": 0.96
-          },
-          "assessments": [
-            {
-              "text": "roto",
-              "sentiment": "negative"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+  {
+    "id": "1",
+    "warnings": [],
+    "keyPhrases": [
+      "cat",
+      "veterinarian"
+    ]
+  },
+  {
+    "id": "2",
+    "warnings": [],
+    "keyPhrases": [
+      "South America",
+      "summer"
+    ]
+  }
+]
+```
+
+## Recognize Entity Linking
+
+**Request:**
+
+```
+curl -X 'POST' \
+  'http://159.223.131.133:3000/apis/v1/entity/RecognizeEntityLinking' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "I am studying in Unc charlotte"
+]'
+
+```
+
+**Response:**
+
+```[
+  {
+    "id": "0",
+    "warnings": [],
+    "entities": [
+      {
+        "name": "University of North Carolina at Charlotte",
+        "matches": [
+          {
+            "confidenceScore": 0.2,
+            "text": "Unc charlotte",
+            "offset": 17,
+            "length": 13
+          }
+        ],
+        "language": "en",
+        "dataSourceEntityId": "University of North Carolina at Charlotte",
+        "url": "https://en.wikipedia.org/wiki/University_of_North_Carolina_at_Charlotte",
+        "dataSource": "Wikipedia",
+        "bingEntitySearchApiId": "8868d55f-2f1f-1ccb-23ed-5a37e83e769c"
+      }
+    ]
+  }
+]
 ```
